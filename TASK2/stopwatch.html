@@ -1,0 +1,73 @@
+<html>
+        <head>
+                <meta charset="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <title>Stopwatch</title>
+                <link rel="stylesheet" href="stop.css">
+
+        </head>
+        <body>
+               <div class="topnav">
+                        <a class="active" href="stopwatch.html">Stopwatch</a>
+                        <a href="timer.html">Timer</a>
+                        <a href="#about"></a>
+                </div>
+                <div class="stopwatch">
+                    <h2>StopWatch</h2>
+                    <div class="display">00:00:00</div>
+                    <div class="button">
+                    <button class="start">Start</button>
+                    <button class="stop">Stop</button>
+                    <button class="reset">Reset</button>
+                    </div>
+                </div>
+                <script>
+                        const stopwatch = document.querySelector('.stopwatch');
+                        const display = stopwatch.querySelector('.display');
+                        const startBtn = stopwatch.querySelector('.start');
+                        const stopBtn = stopwatch.querySelector('.stop');
+                        const resetBtn = stopwatch.querySelector('.reset');
+        
+                        let startTime;
+                        let elapsedTime = 0;
+                        let timerInterval;
+        
+                        function startTimer() {
+                        startTime = Date.now() - elapsedTime;
+                        timerInterval = setInterval(updateTimer, 10);
+                        }
+        
+                        function stopTimer() {
+                        clearInterval(timerInterval);
+                        }
+        
+                        function resetTimer() {
+                        clearInterval(timerInterval);
+                        elapsedTime = 0;
+                        updateDisplay();
+                        }
+        
+                        function updateTimer() {
+                        elapsedTime = Date.now() - startTime;
+                        updateDisplay();
+                        }
+        
+                        function updateDisplay() {
+                        const minutes = Math.floor(elapsedTime / 60000);
+                        const seconds = Math.floor((elapsedTime % 60000) / 1000);
+                        const milliseconds = Math.floor((elapsedTime % 1000) / 10);
+                        display.textContent = `${pad(minutes)}:${pad(seconds)}:${pad(milliseconds)}`;
+                        }
+        
+                        function pad(number) {
+                        return number < 10 ? `0${number}` : number;
+                        }
+        
+                        startBtn.addEventListener('click', startTimer);
+                        stopBtn.addEventListener('click', stopTimer);
+                        resetBtn.addEventListener('click', resetTimer);
+         
+                </script>
+        </body>
+</html>        
+        
